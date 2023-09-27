@@ -40,10 +40,10 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     implementation "org.jetbrains.kotlin:kotlin-stdlib:1.8.0"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.0"
-    
+
     // define any required OkHttp artifacts without version
-    api "com.squareup.okhttp3:okhttp"
-    api "com.squareup.okhttp3:logging-interceptor"
+    implementation("com.squareup.okhttp3:okhttp")
+    implementation("com.squareup.okhttp3:logging-interceptor")
 
 }
 
