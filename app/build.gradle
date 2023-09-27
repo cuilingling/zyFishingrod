@@ -39,6 +39,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.0"
     implementation project(':base')
     implementation project(':net')
+    implementation project(':util')
 
 
 }
