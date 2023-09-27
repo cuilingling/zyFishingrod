@@ -28,8 +28,10 @@ Step 2. Add the dependency
 
 ```
 dependencies {
+
         implementation 'com.github.cuilingling.zyFishingrod:base:v1.0.6-alpha'
         implementation 'com.github.cuilingling.zyFishingrod:net:v1.0.6-alpha'
-```}
+        
+        }
 
 
