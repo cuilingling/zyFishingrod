@@ -40,26 +40,31 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     implementation "org.jetbrains.kotlin:kotlin-stdlib:1.8.0"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.0"
+    
+    // define any required OkHttp artifacts without version
+    api "com.squareup.okhttp3:okhttp"
+    api "com.squareup.okhttp3:logging-interceptor"
 
 }
 
-afterEvaluate {
-    publishing {
-        publications {
-            // Creates a Maven publication called "release".
-            release(MavenPublication) {
-                from components.release
-                groupId = 'com.zhaoyang.net'
-                artifactId = 'android-example'
-                version = '1.0'
-            }
-            debug(MavenPublication) {
-                // Applies the component for the debug build variant.
-                from components.debug
-                groupId = 'com.zhaoyang.net'
-                artifactId = 'android-example'
-                version = '1.0'
-            }
-        }
-    }
-}
+apply from: rootProject.file("gradle/maven-publish.gradle")
+//afterEvaluate {
+//    publishing {
+//        publications {
+//            // Creates a Maven publication called "release".
+//            release(MavenPublication) {
+//                from components.release
+//                groupId = 'com.zhaoyang.net'
+//                artifactId = 'android-example'
+//                version = '1.0'
+//            }
+//            debug(MavenPublication) {
+//                // Applies the component for the debug build variant.
+//                from components.debug
+//                groupId = 'com.zhaoyang.net'
+//                artifactId = 'android-example'
+//                version = '1.0'
+//            }
+//        }
+//    }
+//}

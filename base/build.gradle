@@ -3,6 +3,7 @@ plugins {
     id 'maven-publish'
 }
 
+apply from: rootProject.file("gradle/maven-publish.gradle")
 
 android {
     compileSdk 33
@@ -12,7 +13,6 @@ android {
         targetSdk 33
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
     }
@@ -43,23 +43,25 @@ dependencies {
 
 }
 
-afterEvaluate {
-    publishing {
-        publications {
-            // Creates a Maven publication called "release".
-            release(MavenPublication) {
-                from components.release
-                groupId = 'com.zhaoyang.base'
-                artifactId = 'android-example'
-                version = '1.0'
-            }
-            debug(MavenPublication) {
-                // Applies the component for the debug build variant.
-                from components.debug
-                groupId = 'com.zhaoyang.base'
-                artifactId = 'android-example'
-                version = '1.0'
-            }
-        }
-    }
-}
+
+
+//afterEvaluate {
+//    publishing {
+//        publications {
+//            // Creates a Maven publication called "release".
+//            release(MavenPublication) {
+//                from components.release
+//                groupId = 'com.zhaoyang.base'
+//                artifactId = 'android-example'
+//                version = '1.0'
+//            }
+//            debug(MavenPublication) {
+//                // Applies the component for the debug build variant.
+//                from components.debug
+//                groupId = 'com.zhaoyang.base'
+//                artifactId = 'android-example'
+//                version = '1.0'
+//            }
+//        }
+//    }
+//}
