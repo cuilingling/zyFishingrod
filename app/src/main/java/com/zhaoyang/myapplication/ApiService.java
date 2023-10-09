@@ -12,9 +12,14 @@ import retrofit2.http.Path;
 public interface ApiService {
 
     @Headers({"Domain-Name: douban"}) // Add the Domain-Name header
-    @GET("/v2/book/{id}")
-    Observable<ResponseBody> getBook(@Path("id") int id);
+    @GET("/api/v1/top?type=Imdb&skip=0&limit=20&lang=Cn")
+    Observable<ResponseBody> getBook();
 
+    // api/app/station/listCompany
+
+    @Headers({"Domain-Name: jinxiang"}) // Add the Domain-Name header
+    @GET("/api/app/station/listCompany")
+    Observable<ResponseBody> getListCompany();
 
     @Headers({"Domain-Name: douban"}) // Add the Domain-Name header
     @POST("/v2/book/{id}")
