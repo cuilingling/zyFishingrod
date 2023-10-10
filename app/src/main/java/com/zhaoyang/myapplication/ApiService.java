@@ -21,6 +21,11 @@ public interface ApiService {
     @GET("/api/app/station/listCompany")
     Observable<ResponseBody> getListCompany();
 
+
+    @Headers({"Domain-Name: api"}) // Add the Domain-Name header
+    @GET("/v2/baiduhot")
+    Observable<ResponseBody> getHut();
+
     @Headers({"Domain-Name: douban"}) // Add the Domain-Name header
     @POST("/v2/book/{id}")
     Observable<ResponseBody> getBooks(@Body RequestBody requestBody);

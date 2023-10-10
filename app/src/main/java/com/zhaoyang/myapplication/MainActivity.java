@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.bumptech.glide.Glide;
+import com.zhaoyang.net.RetrofitClient;
 import com.zhaoyang.net.logging.Level;
 import com.zhaoyang.net.logging.LoggingInterceptor;
 import com.zhaoyang.net.util.HttpsUtils;
@@ -33,39 +34,18 @@ public class MainActivity extends AppCompatActivity {
 
         initNet();
 
+
+
     }
 
     private void initNet() {
 
 
 
-        HttpsUtils.SSLParams sslParams = HttpsUtils.getSslSocketFactory();
+        RetrofitClient.getInstance().putDomain("jinxiang", "https://smartdriver.hn96606.cn");
 
-        OkHttpClient okHttpClient = RetrofitUrlManager.getInstance().with(new OkHttpClient.Builder())
-                .sslSocketFactory(sslParams.sSLSocketFactory, sslParams.trustManager)
-                .addInterceptor(new LoggingInterceptor
-                        .Builder()//构建者模式
-                        .loggable(BuildConfig.DEBUG) //是否开启日志打印
-                        .setLevel(Level.BASIC) //打印的等级
-                        .log(Platform.INFO) // 打印类型
-                        .request("Request") // request的Tag
-                        .response("Response")// Response的Tag
-                        .addHeader("log-header", "I am the log request header.") // 添加打印头, 注意 key 和 value 都不能是中文
-                        .build()
-                ).build();
-
-
-        // You can change BaseUrl at any time while App is running (The interface that declared the Domain-Name header)
         // https://api.wmdb.tv/api/v1/top?type=Imdb&skip=0&limit=20&lang=Cn
-        RetrofitUrlManager.getInstance().putDomain("jinxiang", "https://smartdriver.hn96606.cn");
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .client(okHttpClient)
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
-                .baseUrl("https://www.baidu.com")
-                .build();
-
+        Retrofit retrofit = RetrofitClient.getInstance().getRetrofit();
         retrofit.create(ApiService.class).getListCompany()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -79,6 +59,8 @@ public class MainActivity extends AppCompatActivity {
                     public void onNext(@NonNull ResponseBody responseBody) {
                         String s = responseBody.toString();
                         Log.e("TAG", "onNext: " + s);
+
+                        getApi();
                     }
 
                     @Override
@@ -93,6 +75,41 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
+
+    }
+
+    private void getApi() {
+        RetrofitClient.getInstance().putDomain("api", "https://tenapi.cn");
+
+        // https://api.wmdb.tv/api/v1/top?type=Imdb&skip=0&limit=20&lang=Cn
+        Retrofit retrofit = RetrofitClient.getInstance().getRetrofit();
+        retrofit.create(ApiService.class).getHut()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ResponseBody>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(@NonNull ResponseBody responseBody) {
+                        String s = responseBody.toString();
+                        Log.e("TAG", "onNext: " + s);
+
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        Log.e("TAG", "onError: " + e.getMessage());
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
 
     }
 }
